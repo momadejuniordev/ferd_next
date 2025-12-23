@@ -26,9 +26,9 @@ export default function RootLayout({ children }: LayoutProps) {
         <link href="/css/colors/scheme-01.css" rel="stylesheet" />
       </head>
       <body>
-        <Menu />
+        
         {children}
-        <Footer />
+     
 
         {/* Scripts externos */}
         <Script src="/js/plugins.js" strategy="beforeInteractive" />
