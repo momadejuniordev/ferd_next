@@ -1,4 +1,5 @@
 import { supabase } from "@/lib/supabase";
+import WhatIDoCard from "./whatIDo";
 
 type Service = {
   id: number;
@@ -30,13 +31,7 @@ const ServicesSection = async () => {
     <section className="no-top">
       <div className="container">
         <div className="row g-5">
-          <div className="col-lg-4 wow fadeInRight" data-wow-delay=".3s">
-            <div className="p-3 h-100 d-lg-block d-sm-none text-light jarallax">
-              <img src="/images/misc/2.webp" className="jarallax-img" alt="What I Do" />
-              <h3 className="abs-centered m-0">What I Do</h3>
-            </div>
-            <div className="subtitle d-lg-none d-sm-block">What I Do</div>
-          </div>
+          <WhatIDoCard/>
 
           <div className="col-lg-8">
             <div className="row g-4">

@@ -1,0 +1,163 @@
+<script>
+const ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxrZm10Zmloa2JramhpZ3JhandiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI5MDIxOTgsImV4cCI6MjA3ODQ3ODE5OH0.J07lM8E3CsMwvbnDXxeXvTboL46-jqa00jDKTJ2mKHM";
+</script>
+
+
+<embed
+  src="document.pdf"
+  type="application/pdf"
+  width="100%"
+  height="1000"
+  title="Embedded PDF Viewer"
+/>
+
+
+<script>
+fetch("https://lkfmtfihkbkjhigrajwb.supabase.co/functions/v1/translate-api/translate/en", {
+  headers: {
+    apikey: ANON_KEY,
+    Authorization: `Bearer ${ANON_KEY}`,
+  }
+})
+  .then(res => res.json())
+  .then(data => console.log(data))
+  .catch(console.error);
+
+</script>
+
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Definições</title>
+<style>
+  :root {
+    --bg-light: #f9f9f9;
+    --bg-dark: #1e1e1e;
+    --text-light: #333;
+    --text-dark: #f0f0f0;
+    --accent: #d9534f; /* vermelho para ações críticas */
+    --section-bg: #fff;
+    --section-bg-dark: #2a2a2a;
+    --border: #ddd;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: var(--bg-light);
+    color: var(--text-light);
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  body.dark {
+    background-color: var(--bg-dark);
+    color: var(--text-dark);
+  }
+
+  header {
+    padding: 1rem;
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+  }
+
+  h2 {
+    margin-top: 0;
+  }
+
+  .section {
+    background-color: var(--section-bg);
+    margin: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    transition: background-color 0.3s;
+  }
+
+  body.dark .section {
+    background-color: var(--section-bg-dark);
+  }
+
+  .section h3 {
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .section p {
+    margin: 0.25rem 0 0.75rem 0;
+    font-size: 0.95rem;
+  }
+
+  .action-button {
+    padding: 0.5rem 1rem;
+    margin-top: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .critical {
+    background-color: var(--accent);
+    color: white;
+  }
+
+  .toggle-theme {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Definições</h1>
+  <p>Gerencie sua conta e preferências</p>
+</header>
+
+<button class="toggle-theme" onclick="document.body.classList.toggle('dark')">Alternar Tema</button>
+
+<div class="section">
+  <h3>👤 Conta</h3>
+  <p><strong>Perfil:</strong> Nome, email, telefone e foto</p>
+  <p><strong>Dados da empresa:</strong> Informações legais e fiscais</p>
+  <p><strong>Segurança:</strong> Senha, PIN e autenticação</p>
+</div>
+
+<div class="section">
+  <h3>🔔 Preferências</h3>
+  <p><strong>Notificações:</strong> Alertas, promoções e avisos</p>
+  <p><strong>Idioma:</strong> Português</p>
+  <p><strong>Tema:</strong> Claro / Escuro</p>
+</div>
+
+<div class="section">
+  <h3>💳 Pagamentos</h3>
+  <p><strong>Métodos de pagamento:</strong> Cartões, M-Pesa e outros</p>
+  <p><strong>Faturação:</strong> Dados fiscais e histórico</p>
+</div>
+
+<div class="section">
+  <h3>🛠️ App & Suporte</h3>
+  <p><strong>Aplicação:</strong> Permissões de câmara e localização</p>
+  <p><strong>Ajuda e suporte:</strong> Perguntas frequentes e contato</p>
+  <p><strong>Sobre o app:</strong> Versão, termos e privacidade</p>
+</div>
+
+<div class="section">
+  <h3>🚪 Conta (ações críticas)</h3>
+  <button class="action-button">Mudar palavra-passe</button>
+  <button class="action-button">Terminar sessão</button>
+  <button class="action-button critical" onclick="confirm('Tem certeza que deseja eliminar a conta? Esta ação não pode ser desfeita.')">Eliminar conta</button>
+</div>
+
+</body>
+</html>

@@ -1,31 +1,33 @@
 import { supabase } from "@/lib/supabase";
 
-type Work = {
+type Project = {
   id: number;
-  name: string | null;
-  year: number | null;
-  type: string | null;
-  image_url: string | null;
+  title: string;
+  image_url: string;
+  category: string | null;
+  year: string | null;
+  slug: string | null;
 };
 
-async function getWorks(): Promise<Work[]> {
+async function getProjects(): Promise<Project[]> {
   const { data, error } = await supabase
-    .from("works_section")
-    .select("*")
-    .order("id", { ascending: true });
+    .from("projects")
+    .select("id, title, image_url, category, year, slug")
+    .order("id", { ascending: true })
+    .limit(3);
 
   if (error) {
-    console.error("Erro ao buscar works_section:", error);
+    console.error("Erro ao buscar projects:", error);
     return [];
   }
 
-  return data;
+  return data ?? [];
 }
 
-const WorksSection = async () => {
-  const works = await getWorks();
+const WorkSection = async () => {
+  const projects = await getProjects();
 
-  if (!works.length) return null;
+  if (!projects.length) return null;
 
   return (
     <section className="no-top">
@@ -36,6 +38,7 @@ const WorksSection = async () => {
               Works
             </div>
           </div>
+
           <div className="col-lg-10 wow fadeInUp" data-wow-delay=".4s">
             <h2>
               Explore the projects below to see how I bring ideas to life through thoughtful design and meticulous execution.
@@ -46,23 +49,30 @@ const WorksSection = async () => {
         <div className="spacer-single" />
 
         <div className="row g-4 wow fadeInRight" data-wow-delay=".5s">
-          {works.map((work, index) => (
-            <div key={work.id} className="col-lg-4">
+          {projects.map((project) => (
+            <div key={project.id} className="col-lg-4">
               <div className="hover relative overflow-hidden text-light">
-                <a href="/works" className="overflow-hidden d-block relative">
-                  {work.name && (
-                    <h2 className="fs-40 abs-centered z-index-1 hover-op-0">{work.name}</h2>
-                  )}
-                  {work.image_url && (
-                    <img
-                      src={work.image_url}
-                      className="img-fluid hover-scale-1-2"
-                      alt={work.name ?? "Work"}
-                    />
-                  )}
+                <a
+                  href={project.slug ? `/projects/${project.slug}` : "/projects"}
+                  className="overflow-hidden d-block relative"
+                >
+                  <h2 className="fs-40 abs-centered z-index-1 hover-op-0">
+                    {project.title}
+                  </h2>
+
+                  <img
+                    src={project.image_url}
+                    className="img-fluid hover-scale-1-2"
+                    alt={project.title}
+                  />
+
                   <div className="absolute bottom-0 w-100 p-4 d-flex text-white justify-content-between">
-                    {work.type && <div className="d-tag-s2">{work.type}</div>}
-                    {work.year && <div className="fw-bold">{work.year}</div>}
+                    {project.category && (
+                      <div className="d-tag-s2">{project.category}</div>
+                    )}
+                    {project.year && (
+                      <div className="fw-bold">{project.year}</div>
+                    )}
                   </div>
                 </a>
               </div>
@@ -74,4 +84,4 @@ const WorksSection = async () => {
   );
 };
 
-export default WorksSection;
+export default WorkSection;

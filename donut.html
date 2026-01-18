@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Donut 3D em HTML, CSS e JS</title>
+
+  <style>
+    /* Reset básico */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at top, #1f2933, #0b0f14);
+      perspective: 1200px;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    .scene {
+      width: 300px;
+      height: 300px;
+      position: relative;
+      perspective: 1200px;
+    }
+
+    .donut {
+      width: 200px;
+      height: 200px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform-style: preserve-3d;
+      transform: translate(-50%, -50%);
+    }
+
+    .donut span {
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ffb703, #fb8500);
+      box-shadow: 0 0 12px rgba(255, 183, 3, 0.7);
+      transform-style: preserve-3d;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="scene">
+    <div class="donut" id="donut"></div>
+  </div>
+
+  <script>
+    const donut = document.getElementById("donut");
+
+    const totalSegmentos = 36;
+    const raio = 80;
+
+    // Criação do donut
+    for (let i = 0; i < totalSegmentos; i++) {
+      const segmento = document.createElement("span");
+      const angulo = (360 / totalSegmentos) * i;
+
+      segmento.style.transform = `
+        rotateY(${angulo}deg)
+        translateZ(${raio}px)
+      `;
+
+      donut.appendChild(segmento);
+    }
+
+    // Animação
+    let rotX = 0;
+    let rotY = 0;
+
+    function animar() {
+      rotX += 0.4;
+      rotY += 0.6;
+
+      donut.style.transform = `
+        translate(-50%, -50%)
+        rotateX(${rotX}deg)
+        rotateY(${rotY}deg)
+      `;
+
+      requestAnimationFrame(animar);
+    }
+
+    animar();
+  </script>
+
+</body>
+</html>
